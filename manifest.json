@@ -1,0 +1,28 @@
+{
+    "manifest_version": 3,
+    "name": "LeetCode Spaced Repetition Tracker",
+    "description": "Add problems to your spaced repetition list",
+    "version": "1.0",
+    "permissions": [
+      "activeTab",
+      "storage"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "https://leetcode.com/problems/*"
+        ],
+        "js": ["content.js"]
+      }
+    ],
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "host_permissions": [
+      "https://leetcode.com/*"
+    ]
+  }
+  
