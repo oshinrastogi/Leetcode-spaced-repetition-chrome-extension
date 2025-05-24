@@ -25,7 +25,8 @@ export const addProblem = async (req, res) => {
       addedDate: new Date(), 
     });
 
-    await newProblem.save();
+    await newProblem.save()
+    console.log("saved successfully");
     res.status(201).send({
       success:true,
     });

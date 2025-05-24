@@ -52,13 +52,13 @@ function addButton() {
         chrome.storage.local.get('userEmail', (result) => {
           const email = result.userEmail || null;
           if (!email) {
-            alert('Email not found. Please reinstall the extension.');
+            alert('Email not found. Please click on the extension and enter your mail-id.');
             return;
           }
           console.log(problemTitle);
           console.log(problemURL);
           console.log(email);
-          fetch('http://localhost:8080/api/v1/problem/add-problem', { 
+          fetch('https://leetrepeat-api.onrender.com/api/v1/problem/add-problem', { 
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

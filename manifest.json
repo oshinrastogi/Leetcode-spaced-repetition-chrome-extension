@@ -5,7 +5,8 @@
     "version": "1.0",
     "permissions": [
       "activeTab",
-      "storage"
+      "storage",
+      "scripting"
     ],
     "background": {
       "service_worker": "background.js"
@@ -22,7 +23,8 @@
       "default_popup": "popup.html"
     },
     "host_permissions": [
-      "https://leetcode.com/*"
+      "https://leetcode.com/*",
+      "https://leetrepeat-api.onrender.com/*"
     ]
   }
   
