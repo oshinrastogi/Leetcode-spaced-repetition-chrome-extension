@@ -49,8 +49,14 @@ export const sendReminderEmails = async () => {
       });
 
       console.log(`Email sent to ${email}`);
+       res.status(201).send({
+      success:true,
+    });
     }
   } catch (err) {
     console.error('Reminder email error:', err);
+    res.status(500).send({
+      success:false,
+    });
   }
 };
