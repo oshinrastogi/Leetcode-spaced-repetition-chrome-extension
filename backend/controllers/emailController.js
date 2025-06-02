@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 
 const formatDate = (date) => date.toISOString().split('T')[0];
 
-export const sendReminderEmails = async () => {
+export const sendReminderEmails = async (req,res) => {
   try {
     const today = new Date();
     const daysAgo = [3, 5, 7].map(days => {
@@ -34,6 +34,7 @@ export const sendReminderEmails = async () => {
       }
     });
 
+    
     for (const [email, problemList] of Object.entries(emailMap)) {
       const message = `
         <h3>⏰ LeetRepeat Reminder</h3>
@@ -47,9 +48,8 @@ export const sendReminderEmails = async () => {
         subject: `⏰LeetRepeat reminder! Ready to revise? - ${new Date().toLocaleDateString()}`,
         html: message,
       });
-
       console.log(`Email sent to ${email}`);
-       res.status(201).send({
+      res.status(200).send({
       success:true,
     });
     }
