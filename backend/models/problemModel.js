@@ -17,7 +17,9 @@ const problemSchema = new mongoose.Schema({
         type:Date,
         default:Date.now
     },
-})
+});
+
+problemSchema.index({ title: 1, email: 1 }, { unique: true });
 
 export default mongoose.model("Problem",problemSchema);
 
