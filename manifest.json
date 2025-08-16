@@ -17,6 +17,12 @@
           "https://leetcode.com/problems/*"
         ],
         "js": ["content.js"]
+      },
+       {
+        "matches": [
+          "https://leetcode.com/"
+        ],
+        "js": ["home.js"]
       }
     ],
     "action": {

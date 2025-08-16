@@ -1,30 +1,8 @@
-// content.js
-// import toast from 'react-hot-toast';
-// Function to add the button to the page
-
-let lastProblemSlug = null;
-let button = null;
-
-function getProblemSlug() {
-  const match = window.location.pathname.match(/problems\/([^\/]+)\//);
-  return match ? match[1] : null;
-}
-
-function resetButton() {
-  const currentSlug = getProblemSlug();
-  if (!currentSlug) return;
-
-  if (currentSlug !== lastProblemSlug) {
-    lastProblemSlug = currentSlug;
-    addButton();  // reset and add fresh button
-  }
-}
-
 function addButton() {
     // Create the button element
-    if(button) button.remove();
+    // if(button) button.remove();
     button = document.createElement('button');
-    button.innerHTML = 'Add to LeetRepeat';
+    button.innerHTML = 'Let\'s revise';
     // button.style.position = 'fixed';
     button.style.top = '15px';
     button.style.right = '15px';
@@ -37,17 +15,13 @@ function addButton() {
     button.style.cursor = 'pointer';
     button.style.fontSize = '10px';
 
-    // Append button to the body
-    const container = document.getElementsByClassName('text-title-large')[0];
-    const anchor = container.querySelector('a');
-
-    anchor.parentNode.insertBefore(button, anchor.nextSibling);
-
+    setTimeout(()=>{
+        const nav = document.getElementsByClassName('relative m-0 flex h-full grow items-center gap-6 self-end p-0 ')[0];
+        nav.appendChild(button);
+    },3000)
 
     button.addEventListener('click', () => {
 
-        const problemTitle = anchor.textContent.trim();
-        const problemURL = anchor.href;  
         
         if (!chrome || !chrome.storage || !chrome.runtime?.id) {
         alert('Extension context expired. Please refresh the page and try again .');
@@ -61,27 +35,20 @@ function addButton() {
             alert('Email not found. Please click on the extension and enter your mail-id.');
             return;
           }
-          console.log(problemTitle);
-          console.log(problemURL);
           console.log(email);
-          button.textContent = 'Adding...';
 
-          fetch('https://leetrepeat-api.onrender.com/api/v1/problem/add-problem', { 
-            method: 'POST',
+          button.textContent = 'Fetching...';
+
+          fetch('https://leetrepeat-api.onrender.com/api/v1/email/send-email', { 
+            method: 'GET',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-              title: problemTitle,
-              url: problemURL,
-              email: email,
-              time: new Date().toISOString(),
-            }),
           })
           // .then(response => response.json())
           .then(data => {
             if (!data.success) {
-              button.textContent = '✔ Added';
+              button.textContent = '✔ Done';
               // button.style.cursor = 'default';
               button.disabled = true;
               button.style.backgroundColor = '#4CAF50';
@@ -100,10 +67,7 @@ function addButton() {
       
 }
 
-setInterval(resetButton, 1000);
 
-//initial loader
 window.addEventListener('load', () => {
-  lastProblemSlug = getProblemSlug();
   addButton();
 });
